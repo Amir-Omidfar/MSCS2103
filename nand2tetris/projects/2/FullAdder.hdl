@@ -12,7 +12,32 @@ CHIP FullAdder {
 
     PARTS:
     //// Replace this comment with your code.
-    HalfAdder(a=a, b=b, carry = carry1, sum = sum1);
-    HalfAdder(a=sum1, b=c, carry = carry2, sum=sum);
-    And (a=carry1, b=carry2, out=carry);
+    //Sum
+    Xor (a = a, b = b, out = o1 );
+    Xor (a = o1, b = c, out = sum);
+    //Carry 
+    And (a = a, b = b, out = c1);
+    And (a = c, b = o1, out = c2);
+    Or (a = c1, b = c2, out = carry );
+    
+
+
 }
+
+/*
+For carry to be 1  we need at least two input to be 1:
+carry  = a&&b or a&&c or b&&c
+however better implementation would be:
+carry = a&&b or c and (a xor b)
+
+in  c s
+000 0 0
+001 0 1  (a and b) and c
+010 0 1
+011 1 0  
+100 0 1
+101 1 0
+110 1 0
+111 1 1
+
+*/
