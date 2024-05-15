@@ -1,4 +1,4 @@
-# MSCS2103
+# MSCS2103: Sofia Systems Programming Spring 2024
 
 ## Nand2tetris assignments
 ### How to run Nand2tetris projects
