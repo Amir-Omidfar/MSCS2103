@@ -64,16 +64,32 @@ CHIP ALU {
 
     // if (no == 1) sets out = !out   // bitwise not
     Not16 (in = sumandxy, out = notsumandxy);
-    Mux16 (a = sumandxy, b = notsumandxy , sel = n , out = res);
-
-
-
+    Mux16 (a = sumandxy, b = notsumandxy , sel = no , out = res);
 
 
     //  out[16], // 16-bit output
     //  zr,      // if (out == 0) equals 1, else 0
 
-    Or16Way (in=res,out=o);  //for zr
+    
+    Or8Way (in[0]=res[0], in[0]=res[0],out=r1);
+    Or8Way (in=res[8..15],out=r2);
+    Or (a = res[0], b = res[1], out = a0);
+    Or (a = res1, b = in[2], out = res2);
+    Or (a = res2, b = in[3], out = res3);
+    Or (a = res3, b = in[4], out = res4);
+    Or (a = res4, b = in[5], out = res5);
+    Or (a = res5, b = in[6], out = res6);
+    Or (a = res6, b = in[7], out = out);
+    Or (a = in[0], b = in[1], out = res1);
+    Or (a = res1, b = in[2], out = res2);
+    Or (a = res2, b = in[3], out = res3);
+    Or (a = res3, b = in[4], out = res4);
+    Or (a = res4, b = in[5], out = res5);
+    Or (a = res5, b = in[6], out = res6);
+    Or (a = res6, b = in[7], out = out);
+
+    Or (a = r1, b = r2, out = o );
+    //Or16Way (in=res,out=o);  //for zr
     Not (in=o,out=zr);
     //  ng;      // if (out < 0)  equals 1, else 0
     And16 (a[0..15]=true, b=res, out[15]=ng, out[0..14]=drop); //ng
